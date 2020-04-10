@@ -3,31 +3,63 @@
 <head>
 <title>Welcome to a platformer or something</title>
 <canvas id="main_canvas" width="1000" height="1000" style="border:1px solid black;"></canvas>
+<script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script> 
 <script>
 
 var canvas = document.getElementById("main_canvas");
-var ctx = canvas.getContext("2d");
-var x = 100;
+
+function sketchProc(processingInstance) {
+	with(processingInstance) {
+		var screenwidth = 500;
+		var screenheight = 500;
+		
+		size(screenwidth, screenheight); 
+		frameRate(30);
+
+		var keys = [];
+		var playerx = 0;
+		var playery = 0;
+		var playerwidth = 20;
+		var playerheight = 20;
+		var speed = 4;
+		var bounce = -6;
+		var gravity = 0.2;
+
+		var draw = function() {
+			background(0,0,0)
+			if(keys[UP] && playery === screenheight-playerheight){
+				bounce = 6; 
+			}
+			if(keys[RIGHT]){
+				playerx += speed;
+			}
+			if(keys[LEFT]){
+				playerx -= speed;
+			}
+			bounce -= gravity;
+			bounce = constrain(bounce, -6, 10000);
+
+			playery -= bounce;
+			playery = constrain(playery, 0, screenheight-playerheight);
+			rect(playerx, playery, playerwidth, playerheight);
+
+		}
+		var keyPressed = function() { 
+			keys[keyCode] = true;
+		};
+ 
+		var keyReleased = function() { 
+			keys[keyCode] = false; 
+		};
 
 
-var drawcircle = function(posx, posy, radius) {
-	ctx.beginPath();
-	ctx.arc(posx, posy, radius, 0, 2 * Math.PI);
-	ctx.stroke();
-}
-function drawrectangle(posx, posy, width, height) {
-	ctx.beginPath();
-	ctx.rect(posx, posy, width, height);
-	ctx.stroke();
-}
+		
+	}
+}	
 
-function main() {
-	setTimeout(main, 200);
-	drawcircle(x, 100, 50);
-	x += 2;
+var processingInstance = new Processing(canvas, sketchProc); 
 
-}
-main();
+
 </script>
 
 </head>
