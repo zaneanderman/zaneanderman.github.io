@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to a platformer or something</title>
+<canvas id="main_canvas" width="1000" height="1000" style="border:1px solid black;"></canvas>
+<script>
+
+var canvas = document.getElementById("main_canvas");
+var ctx = canvas.getContext("2d");
+var x = 100;
+
+
+var drawcircle = function(posx, posy, radius) {
+	ctx.beginPath();
+	ctx.arc(posx, posy, radius, 0, 2 * Math.PI);
+	ctx.stroke();
+}
+function drawrectangle(posx, posy, width, height) {
+	ctx.beginPath();
+	ctx.rect(posx, posy, width, height);
+	ctx.stroke();
+}
+
+function main() {
+	setTimeout(main, 200);
+	drawcircle(x, 100, 50);
+	x += 2;
+
+}
+main();
+</script>
+
+</head>
+<body>
+
+</body>
+</html>
